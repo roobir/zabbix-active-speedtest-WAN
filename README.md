@@ -1,9 +1,8 @@
-# Zabbix Speedtest template
+# Zabbix Speedtest application for Active Zabbix Agent
 
 ## Dependencies
 
-- [bc](https://www.gnu.org/software/bc/manual/html_mono/bc.html)
-- [jq](https://stedolan.github.io/jq/)
+- Ubuntu 24.04 
 - [speedtest-cli](https://www.speedtest.net/apps/cli)
 
 ## ⚠️ Warning
