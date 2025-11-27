@@ -8,6 +8,7 @@ All the thanks goes to pschmitt and this is only an updated fork to the existing
 
 - Ubuntu 24.04 LTS
 - Zabbix server 7.0 LTS
+- Zabbix agent (for ubuntu 24.04)
 - [speedtest-cli](https://www.speedtest.net/apps/cli)
 
 ## Installation
