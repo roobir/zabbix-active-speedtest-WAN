@@ -11,7 +11,6 @@ usage() {
   echo "-d: Display last measured download speed"
   echo "-j: Display last measured jitter"
   echo "-p: Display last measured ping latency"
-#  echo "-t: Display last measurement timestamp"
   echo "-s: Display last server used for measurements"
   echo "-m X: Fail/don't display data if it is older than X seconds"
   echo
@@ -25,10 +24,6 @@ bytes_to_mbit() {
 ms_to_s() {
   echo "scale=6; $1 / 1000" | bc -l
 }
-
-#get_data_timestamp() {
-#  jq -r '.timestamp | fromdate' "$DATA_FILE"
-#}
 
 get_last_ping_time() {
 ### roob changed the below .latency removed
@@ -113,10 +108,6 @@ do
       ACTION=show_server
       shift
       ;;
-#    -t|--timestamp)
-#      ACTION=show_timestamp
-#      shift
-#      ;;
     -r|--run)
       ACTION=run
       shift
@@ -142,16 +133,6 @@ done
 # set positional arguments in their proper place
 eval set -- "$PARAMS"
 
-### taking this out for now, something else broke.
-
-#if [[ "$ACTION" != "run" ]]
-#then
-#  if [[ "$MAX_AGE" -gt 0 ]] && data_is_outdated
-#  then
-#    echo "Data is outdated. MAX_AGE is set to ${MAX_AGE} seconds. Please update with --run." >&2
-#    exit 5
-#  fi
-#fi
 
 case "$ACTION" in
   show_dl)
