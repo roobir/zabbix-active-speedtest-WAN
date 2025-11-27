@@ -14,6 +14,12 @@ All the thanks goes to pschmitt and this is only an updated fork to the existing
 
 - Update the Ubuntu host by means of `apt-get update` and `apt-get upgrade -y`
 - Install [speedtest-cli](https://www.speedtest.net/apps/cli) by means of `apt-get install speedtest-cli`
+- Download the Zabbix Agent repo: `wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.0+ubuntu24.04_all.deb`
+- Install the Zabbix Agent repo: `dpkg -i zabbix-release_latest_7.0+ubuntu24.04_all.deb`
+- Update apt: `apt update `
+- Install the Zabbix Agent: `apt-get install zabbix-agent`
+- Restart Zabbix Agent: `systemctl restart zabbix-agent`
+- Enable Zabbix Agent: `systemctl enable zabbix-agent`
 - Create `/etc/zabbix/script`: `mkdir -p /etc/zabbix/script`
 - Create `/tmp/speedtest.json`: `mkdir -p /tmp/` and `touch /tmp/speedtest.json`
 - Copy `speedtest.sh` to `/etc/zabbix/script/speedtest.sh`
