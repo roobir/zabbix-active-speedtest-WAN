@@ -21,4 +21,5 @@ All the thanks goes to pschmitt and this is only an updated fork to the existing
 - Create crontab with scheduled speedtest function: `crontab -e` and then add at the bottom: `*/15 * * * * /etc/zabbix/script/speedtest.sh`
 - Import the zabbix-agent config: `cp zabbix_agentd.d/speedtest.conf /etc/zabbix/zabbix_agentd.conf.d`
 - Restart zabbix-agent: `systemctl restart zabbix-agent`
-- Import `template_speedtest.xml` on your Zabbix server
+- Import `Zabbix Active Speedtest WAN Application.yml` on your Zabbix server
+- Create new host and select 
