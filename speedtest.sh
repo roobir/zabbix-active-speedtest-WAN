@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
@@ -11,7 +11,7 @@ usage() {
   echo "-d: Display last measured download speed"
   echo "-j: Display last measured jitter"
   echo "-p: Display last measured ping latency"
-  echo "-t: Display last measurement timestamp"
+#  echo "-t: Display last measurement timestamp"
   echo "-s: Display last server used for measurements"
   echo "-m X: Fail/don't display data if it is older than X seconds"
   echo
@@ -19,15 +19,22 @@ usage() {
 }
 
 bytes_to_mbit() {
-  echo "scale=2; $1 / 125000" | bc -l
+  echo "scale=2; $1 / 1000000" | bc -l
 }
 
-get_data_timestamp() {
-  jq -r '.timestamp | fromdate' "$DATA_FILE"
+ms_to_s() {
+  echo "scale=6; $1 / 1000" | bc -l
 }
+
+#get_data_timestamp() {
+#  jq -r '.timestamp | fromdate' "$DATA_FILE"
+#}
 
 get_last_ping_time() {
-  jq -r '.ping.latency' "$DATA_FILE"
+### roob changed the below .latency removed
+  jq -r '.ping' "$DATA_FILE"
+### roob going to destry this line
+###   ms_to_s "$(jq -r '.ping' "$DATA_FILE")"
 }
 
 get_last_jitter_time() {
@@ -35,11 +42,14 @@ get_last_jitter_time() {
 }
 
 show_last_download_speed() {
-  bytes_to_mbit "$(jq -r '.download.bandwidth' "$DATA_FILE")"
+####  roob fubar the below
+####  bytes_to_mbit "$(jq -r '.download.bandwidth' "$DATA_FILE")"
+   bytes_to_mbit "$(jq -r '.download' "$DATA_FILE")"
 }
 
 show_last_upload_speed() {
-  bytes_to_mbit "$(jq -r '.upload.bandwidth' "$DATA_FILE")"
+### roob did the same fubar here :(
+  bytes_to_mbit "$(jq -r '.upload' "$DATA_FILE")"
 }
 
 show_server_info() {
@@ -103,10 +113,10 @@ do
       ACTION=show_server
       shift
       ;;
-    -t|--timestamp)
-      ACTION=show_timestamp
-      shift
-      ;;
+#    -t|--timestamp)
+#      ACTION=show_timestamp
+#      shift
+#      ;;
     -r|--run)
       ACTION=run
       shift
@@ -132,14 +142,16 @@ done
 # set positional arguments in their proper place
 eval set -- "$PARAMS"
 
-if [[ "$ACTION" != "run" ]]
-then
-  if [[ "$MAX_AGE" -gt 0 ]] && data_is_outdated
-  then
-    echo "Data is outdated. MAX_AGE is set to ${MAX_AGE} seconds. Please update with --run." >&2
-    exit 5
-  fi
-fi
+### taking this out for now, something else broke.
+
+#if [[ "$ACTION" != "run" ]]
+#then
+#  if [[ "$MAX_AGE" -gt 0 ]] && data_is_outdated
+#  then
+#    echo "Data is outdated. MAX_AGE is set to ${MAX_AGE} seconds. Please update with --run." >&2
+#    exit 5
+#  fi
+#fi
 
 case "$ACTION" in
   show_dl)
@@ -161,7 +173,7 @@ case "$ACTION" in
     get_data_timestamp
     ;;
   run)
-    if speedtest --accept-license --accept-gdpr -f json > "${DATA_FILE}.new"
+    if speedtest --secure --json > "${DATA_FILE}.new"
     then
       mv "${DATA_FILE}.new" "$DATA_FILE"
     fi
