@@ -1,0 +1,110 @@
+zabbix_export:
+  version: '7.0'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 8946ceb8cd9241e389b39e2f301312b9
+      template: 'Zabbix Active Speedtest WAN Application'
+      name: 'Zabbix Active Speedtest WAN Application'
+      groups:
+        - name: Templates
+      items:
+        - uuid: bcfa32be79c0413fb95966f50f83d3c3
+          name: speedtest.download
+          type: ZABBIX_ACTIVE
+          key: speedtest.download
+          value_type: FLOAT
+          units: Mbit/s
+          timeout: 60s
+          triggers:
+            - uuid: e967014c5239450e96a2317485057a3c
+              expression: 'avg(/Zabbix Active Speedtest WAN Application/speedtest.download,#3)<15'
+              name: '{HOST.HOST} Download server speed < 15Mb/s'
+              priority: DISASTER
+            - uuid: e4d819c7849f4cf5ad5f66dc976ee5c7
+              expression: 'avg(/Zabbix Active Speedtest WAN Application/speedtest.download,#3)<50'
+              name: '{HOST.HOST} Download server speed < 50Mb/s'
+              priority: WARNING
+        - uuid: 06462d9510fa4f5d9f04a283f3d376ab
+          name: speedtest.ping
+          type: ZABBIX_ACTIVE
+          key: speedtest.ping
+          value_type: FLOAT
+          units: ms
+          timeout: 60s
+          triggers:
+            - uuid: 56b87cad90e14722af6e18d3f066aabf
+              expression: 'avg(/Zabbix Active Speedtest WAN Application/speedtest.ping,#3)>20'
+              name: '{HOST.HOST} Ping server latency > 20ms'
+              priority: WARNING
+            - uuid: e83e4043862c474b9fde0ccadf150c8d
+              expression: 'avg(/Zabbix Active Speedtest WAN Application/speedtest.ping,#3)>60'
+              name: '{HOST.HOST} Ping server latency > 60ms'
+              priority: DISASTER
+        - uuid: 3961cae18a7e4b8b99043219ce4d13ad
+          name: speedtest.upload
+          type: ZABBIX_ACTIVE
+          key: speedtest.upload
+          value_type: FLOAT
+          units: Mbit/s
+          timeout: 60s
+          triggers:
+            - uuid: b5290087b46b46009df1caef8201d917
+              expression: 'avg(/Zabbix Active Speedtest WAN Application/speedtest.upload,#3)<15'
+              name: '{HOST.HOST} Upload server speed < 15Mb/s'
+              priority: DISASTER
+            - uuid: c12342ed4d454606841526a950b781fe
+              expression: 'avg(/Zabbix Active Speedtest WAN Application/speedtest.upload,#3)<50'
+              name: '{HOST.HOST} Upload server speed < 50Mb/s'
+              priority: WARNING
+      discovery_rules:
+        - uuid: acda40b788ef450dbc29f556fa6bab37
+          name: 'Speedtest Discovery'
+          type: ZABBIX_ACTIVE
+          key: speedtest.custom
+          delay: 1h
+          item_prototypes:
+            - uuid: f0d2d13b01984050a1f885d832a314bc
+              name: 'Speedtest {#SERVERNAME} - Download'
+              type: ZABBIX_ACTIVE
+              key: 'speedtest.download.server[{#SERVERID}]'
+              value_type: FLOAT
+              units: Mbit/s
+              timeout: 60s
+            - uuid: 890f30df6aa247d3ae1e9b72f7f5a88d
+              name: 'Speedtest {#SERVERNAME} - Latency'
+              type: ZABBIX_ACTIVE
+              key: 'speedtest.ping.server[{#SERVERID}]'
+              value_type: FLOAT
+              units: ms
+              timeout: 60s
+            - uuid: 4962c02d5d43495ea90d187617f60654
+              name: 'Speedtest {#SERVERNAME} - Upload'
+              type: ZABBIX_ACTIVE
+              key: 'speedtest.upload.server[{#SERVERID}]'
+              value_type: FLOAT
+              units: Mbit/s
+              timeout: 60s
+          timeout: 60s
+  graphs:
+    - uuid: e0ce1e1fefa54340805d20479e625dfa
+      name: 'Server Speedtest Performance'
+      graph_items:
+        - color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'Zabbix Active Speedtest WAN Application'
+            key: speedtest.download
+        - sortorder: '1'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: 'Zabbix Active Speedtest WAN Application'
+            key: speedtest.ping
+        - sortorder: '2'
+          color: 2774A4
+          calc_fnc: ALL
+          item:
+            host: 'Zabbix Active Speedtest WAN Application'
+            key: speedtest.upload
