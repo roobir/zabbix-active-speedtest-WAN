@@ -12,7 +12,7 @@ All the thanks goes to pschmitt and this is only an updated fork to the existing
 
 ## Installation
 
-- Update the Ubuntu host by means of `apt-get update` and `apt-get upgrade -e`
+- Update the Ubuntu host by means of `apt-get update` and `apt-get upgrade -y`
 - Install [speedtest-cli](https://www.speedtest.net/apps/cli) by means of `apt-get install speedtest-cli`
 - Create `/etc/zabbix/script`: `mkdir -p /etc/zabbix/script`
 - Create `/tmp/speedtest.json`: `mkdir -p /tmp/` and `touch /tmp/speedtest.json`
@@ -22,4 +22,4 @@ All the thanks goes to pschmitt and this is only an updated fork to the existing
 - Import the zabbix-agent config: `cp zabbix_agentd.d/speedtest.conf /etc/zabbix/zabbix_agentd.conf.d`
 - Restart zabbix-agent: `systemctl restart zabbix-agent`
 - Import `Zabbix Active Speedtest WAN Application.yml` on your Zabbix server
-- Create new host and select 
+- Create new host and select template "Zabbix Active Speedtest WAN Application"
