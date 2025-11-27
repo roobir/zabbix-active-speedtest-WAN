@@ -14,6 +14,7 @@ All the thanks goes to pschmitt and this is only an updated fork to the existing
 
 - Install [speedtest-cli](https://www.speedtest.net/apps/cli) by means of `apt-get install speedtest-cli`
 - Create `/etc/zabbix/script`: `mkdir -p /etc/zabbix/script`
+- Create `/tmp/speedtest.json`: `mkdir -p /tmp/` and `touch /tmp/speedtest.json`
 - Copy `zbx-speedtest-debian.sh` to `/etc/zabbix/bin/zbx-speedtest.sh`
 - Make it executable: `chmod +x /etc/zabbix/bin/zbx-speedtest.sh`
 - Create crontab with scheduled speedtest function: `crontab -e` and then add at the bottom: `*/15 * * * * /etc/zabbix/script/speedtest.sh`
