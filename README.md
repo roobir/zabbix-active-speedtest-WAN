@@ -12,13 +12,13 @@ All the thanks goes to pschmitt and this is only an updated fork to the existing
 
 ## Installation
 
+- Update the Ubuntu host by means of `apt-get update` and `apt-get upgrade -e`
 - Install [speedtest-cli](https://www.speedtest.net/apps/cli) by means of `apt-get install speedtest-cli`
 - Create `/etc/zabbix/script`: `mkdir -p /etc/zabbix/script`
 - Create `/tmp/speedtest.json`: `mkdir -p /tmp/` and `touch /tmp/speedtest.json`
-- Copy `zbx-speedtest-debian.sh` to `/etc/zabbix/bin/zbx-speedtest.sh`
-- Make it executable: `chmod +x /etc/zabbix/bin/zbx-speedtest.sh`
+- Copy `speedtest.sh` to `/etc/zabbix/script/speedtest.sh`
+- Make it executable: `chmod +x /etc/zabbix/script/speedtest.sh`
 - Create crontab with scheduled speedtest function: `crontab -e` and then add at the bottom: `*/15 * * * * /etc/zabbix/script/speedtest.sh`
-- Start and enable the timer: `systemctl enable --now zabbix-speedtest.timer`
 - Import the zabbix-agent config: `cp zabbix_agentd.d/speedtest.conf /etc/zabbix/zabbix_agentd.conf.d`
 - Restart zabbix-agent: `systemctl restart zabbix-agent`
 - Import `template_speedtest.xml` on your Zabbix server
