@@ -1,8 +1,9 @@
 # Zabbix Speedtest application for Active Zabbix Agent
 
 ## Foreword
+
 Thanks to @zkassab for the inspiration, the application testing, and thanks to @pschmitt for providing guidelines how to use main application over here: https://github.com/pschmitt/zabbix-template-speedtest
-All the thanks goes to pschmitt and this is only an updated fork to the existing Speedtest WAN App, with an unique spin in different direction. The goal of this fork is to deploy multiple hosts that will intermittently perform speedtest-cli and share the results with a centralized Zabbix server (through active push updates).
+This is an updated fork to the existing Speedtest WAN App, with an unique spin in a different direction. The goal of this fork is to deploy multiple hosts that will intermittently perform speedtest-cli and share the results with a centralized Zabbix server (through active push updates). Templates and guidelines provided will allow your setup to poll, graph, and trigger alerts based on the utilization results of ping, upload bandwidth and download bandwidth on Zabbix 7.0 LTS.
 
 ## Dependencies
 
